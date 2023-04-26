@@ -1,0 +1,78 @@
+﻿@model Student
+
+<form method="post" asp-action="Upsert">
+
+           <input hidden asp-for="StudentId" />
+   
+            <div class="border p-3 mt-4 row">
+                <div class="col-12 pb-2">
+                    <h2 class="text-primary">@(Model.StudentId != 0 ? "Update" : "Create") Student</h2>
+                    <hr />
+                </div>
+                @* <div asp-validation-summary="All"></div>*@
+                <div class="mb-3">
+                    <label asp-for="Name"> </label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="RollNo"> </label>
+                   <input asp-for="RollNo" required class="form-control" />
+                    <span asp-validation-for="RollNo" class="text-danger"></span>
+                </div>              
+                <div class="mb-3 col-6">
+                    <label asp-for="Email"></label>
+                    <input asp-for="Email" required type="email" class="form-control" />
+                    <span asp-validation-for="Email" style="color:red"></span>
+                </div>
+                <div class="mb-3 col-6">
+                    <label asp-for="Address"></label>                    
+                    <textarea asp-for="Address" rows="3" class="form-control"></textarea>
+                    <span asp-validation-for="Address" style="color:red"></span>
+                </div>
+        <div class="mb-3 col-6">
+            <label asp-for="ContactNo"></label>
+            <input asp-for="ContactNo" required type="number" class="form-control" />
+            <span asp-validation-for="ContactNo" style="color:red"></span>
+        </div>
+        <div class="mb-3 col-6">
+            <label asp-for="State"></label>
+            <input asp-for="State" required  class="form-control" />
+            <span asp-validation-for="State" style="color:red"></span>
+        </div>
+        <div class="mb-3 col-6">
+            <label asp-for="City"></label>
+            <input asp-for="City" required  class="form-control" />
+            <span asp-validation-for="City" style="color:red"></span>
+        </div>
+        <div class="mb-3 col-6">
+            <label asp-for="Zipcode"></label>
+            <input asp-for="Zipcode" required type="number" class="form-control" />
+            <span asp-validation-for="Zipcode" style="color:red"></span>
+        </div>
+
+                <div class="col-12">
+                    @if (Model.StudentId != 0)
+                    {
+                        <button type="submit" class="btn btn-primary" style="width:150px">Update</button>
+                    }
+                    else
+                    {
+                        <button type="submit" onclick="return ValidateInput()" class="btn btn-primary" style="width:150px">Create</button>
+                    }
+
+                    <a asp-controller="Admin" asp-action="Index" class="btn btn-secondary" style="width:150px">
+                        Back to List
+                    </a>
+                </div>
+            </div>
+</form>
+        
+
+
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+   
+}

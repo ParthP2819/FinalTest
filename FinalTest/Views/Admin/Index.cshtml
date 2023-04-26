@@ -1,0 +1,131 @@
+﻿@model IEnumerable<Student>
+
+<style>
+    table {
+        width: 100%;
+    }
+
+        table tr:hover {
+            background-color: forestgreen;
+            color: #fff;
+        }
+
+</style>
+
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary">Student List</h2>          
+        </div>    
+            <div class="col-6 text-end">
+                <a asp-controller="Admin" asp-action="Upsert" class="btn btn-primary">
+                    <i class="bi bi-plus-circle"></i> &nbsp;  Add Student
+                </a>              
+            </div>
+    </div>
+    <br /><br />
+
+
+
+    <table id="tblData" class="table table-bordered table-striped" style="width:100%">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Contact</th>
+                <th>RollNo</th>
+                <th>Address</th>
+                <th>State</th>
+                <th>City</th>
+                <th>Zipcode</th>
+                <th>CourseTotalPrice</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var obj in Model)
+            {
+                <tr>
+                    <td width="10%">
+                        @obj.Name
+                    </td>
+                    <td width="10%">
+                        @obj.Email
+                    </td>
+                    <td width="10%">
+                        @obj.ContactNo <br>
+                    </td>
+                    <td width="10%">
+                        @obj.RollNo <br>
+                    </td>
+                    <td width="10%">
+                        @obj.Address
+                    </td>
+                    <td width="10%">
+                        @obj.State
+                    </td>
+                    <td width="10%">
+                        @obj.City <br>
+                    </td>
+                    <td width="10%">
+                        @obj.Zipcode <br>
+                    </td>
+                    <td width="10%">
+                        ABC
+                    </td>
+                    <td>
+                        <div class="w-75 btn-group" role="group">
+                            <a asp-controller="Admin" asp-action="Upsert" asp-route-id="@obj.StudentId"
+                           class="btn btn-primary mx-2"> <i class="bi bi-pencil-square"></i> Edit</a>
+                            <a onclick="DelProduct('@obj.StudentId')"
+                           class="btn btn-danger mx-2"><i class="bi bi-trash3"></i>  Delete</a>
+                            <a asp-controller="Admin" asp-action="AddCourse" asp-route-id="@obj.StudentId"
+                           class="btn btn-dark mx-2"> <i class="bi bi-pencil-square"></i> Add Cources</a>
+                            <a asp-controller="Admin" asp-action="ViewCourse" asp-route-id="@obj.StudentId"
+                           class="btn btn-dark mx-2"> <i class="bi bi-pencil-square"></i> View Cources</a>
+                        </div>
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+
+    </table>
+    <br />
+    
+</div>
+
+
+@{
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script>
+        function DelProduct(value) {
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+
+                    $.ajax({
+                        type: "POST",
+                        url: "/Admin/DeleteStudent",
+                        // data: "Id="+Id,
+                        data: { "Id": value },
+                        success: function (data) {
+                            window.location.replace("/Admin/Index");
+                        }
+
+                    })
+                }
+            })
+        }
+
+
+    </script>
+}
